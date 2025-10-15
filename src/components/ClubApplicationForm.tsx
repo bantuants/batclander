@@ -196,7 +196,7 @@ export function ClubApplicationForm() {
                 </div>
 
                 <p className="text-sm text-muted-foreground">
-                  Questions? Email us at <a href="mailto:club@bantuants.com" className="text-primary hover:underline">club@bantuants.com</a>
+                  Questions? Email us at <a href="mailto:bantuantstravelclub@gmail.com" className="text-primary hover:underline">bantuantstravelclub@gmail.com</a>
                 </p>
               </div>
             </div>

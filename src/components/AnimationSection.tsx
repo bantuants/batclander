@@ -1,8 +1,7 @@
 import { motion } from "motion/react";
-import { ImageWithFallback } from "./figma/ImageWithFallback";
-import { Card } from "./ui/card";
 import { Button } from "./ui/button";
-import { Play, ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, X } from "lucide-react";
+import { useRef, useState } from "react";
 
 // Import character card images
 import imgMansaMusa from "figma:asset/3093334db9b018f797cda1e96c4e0681e4252e1a.png";
@@ -137,44 +136,24 @@ const historicalCharacters = [
 export function AnimationSection({
   onNavigateToAnimation,
 }: AnimationSectionProps) {
-  const characters = [
-    {
-      name: "🧱 Kamau the Miner",
-      role: "Son of miners, child of revolutionaries",
-      description:
-        "Kamau digs for more than gold. He unearths stories buried by time, reclaiming relics stolen from his ancestors. Guided by visions of the lost Queen, he becomes a bridge between memory and rebellion — a seeker of truth in a fractured world.",
-      powers: [
-        "Ancestral intuition",
-        "Strategic foresight",
-        "Kwanzite resonance",
-      ],
-      personality: "Calm, observant, quietly defiant",
-    },
-    {
-      name: "⚔️ Fina the Rebel Queen",
-      role: "Born royal, raised by warriors",
-      description:
-        "Trained by the Ahosi, Fina wields both language and blade with the precision of destiny. Her presence commands loyalty; her silence, respect. She carries the wisdom of queens and the fury of generations denied their crown.",
-      powers: [
-        "Linguistic decoding",
-        "Hand-to-hand mastery",
-        "Spiritual empathy",
-      ],
-      personality: "Disciplined, regal, courageous",
-    },
-    {
-      name: "🗣️ Zulu the Warrior",
-      role: "Descendant of the legendary Shaka line",
-      description:
-        "Zulu hides pain behind laughter and wisdom behind wit. A rhythm lives in his stride, a storm in his hands. When he fights, battle becomes dance — and every loss becomes legend.",
-      powers: [
-        "Enhanced strength",
-        "Tactical combat",
-        "Ancestral echo",
-      ],
-      personality: "Loyal, magnetic, fiercely protective",
-    },
-  ];
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [selectedCharacter, setSelectedCharacter] = useState<typeof historicalCharacters[0] | null>(null);
+
+
+
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      const cardWidth = 200 + 12; // card width + gap
+      scrollContainerRef.current.scrollBy({ left: -cardWidth * 2, behavior: 'smooth' });
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      const cardWidth = 200 + 12; // card width + gap
+      scrollContainerRef.current.scrollBy({ left: cardWidth * 2, behavior: 'smooth' });
+    }
+  };
 
   return (
     <section
@@ -195,12 +174,13 @@ export function AnimationSection({
             </span>
           </div>
           <h2 className="text-3xl md:text-4xl mb-3 text-primary">
-            The Kwanzite Chronicles
+            The Bantu Ants Universe
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            An Afrofuturist animated series where ancient
-            African kingdoms discover a mystical energy source
-            that bridges past, present, and future.
+          <p className="text-lg md:text-xl font-medium mb-4 text-primary/80">
+            Where folklore meets the future.
+          </p>
+          <p className="text-muted-foreground max-w-3xl mx-auto">
+            An Afrofuturist animated saga exploring memory, power, and identity across Africa and the diaspora. Follow the journey of miners, queens, and rebels as they uncover hidden histories and redefine the future through unity and resistance.
           </p>
         </motion.div>
 
@@ -212,74 +192,143 @@ export function AnimationSection({
           <p className="text-center text-muted-foreground mb-6 text-sm">
             Historical Legends from the Bantu Ants Universe
           </p>
-
-          {/* Infinite Horizontal Scroll */}
-          <div className="relative overflow-hidden">
-            {/* Gradient Overlays */}
-            <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-            <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
-
-            <motion.div
-              className="flex gap-6"
-              animate={{
-                x: [
-                  0,
-                  -1 * (historicalCharacters.length * 385),
-                ],
-              }}
-              transition={{
-                x: {
-                  repeat: Infinity,
-                  repeatType: "loop",
-                  duration: 60,
-                  ease: "linear",
-                },
-              }}
+          
+          {/* Character Cards Slider */}
+          <div className="relative"  style={{ minHeight: '320px' }}>
+            {/* Navigation Buttons - Hidden on mobile, visible on desktop */}
+            <button
+              onClick={scrollLeft}
+              className="hidden md:flex absolute left-2 top-1/2 -translate-y-1/2 z-20 bg-white/90 hover:bg-white border border-gray-200 rounded-full p-2 shadow-lg transition-all duration-200 hover:shadow-xl items-center justify-center"
+              aria-label="Scroll left"
             >
-              {/* Render cards twice for seamless loop */}
-              {[
-                ...historicalCharacters,
-                ...historicalCharacters,
-              ].map((character, index) => (
-                <div
-                  key={`${character.name}-${index}`}
-                  className="shrink-0 w-[369px]"
-                >
-                  <div className="h-[504px] overflow-clip relative rounded-xl border border-black shadow-lg hover:shadow-2xl transition-shadow group">
-                    {/* Character Image */}
-                    <div className="absolute inset-0">
-                      <img
-                        src={character.image}
-                        alt={character.name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
+              <ChevronLeft className="w-5 h-5 text-gray-700" />
+            </button>
+            
+            <button
+              onClick={scrollRight}
+              className="hidden md:flex absolute right-2 top-1/2 -translate-y-1/2 z-20 bg-white/90 hover:bg-white border border-gray-200 rounded-full p-2 shadow-lg transition-all duration-200 hover:shadow-xl items-center justify-center"
+              aria-label="Scroll right"
+            >
+              <ChevronRight className="w-5 h-5 text-gray-700" />
+            </button>
 
-                    {/* Content Overlay */}
-                    <div className="absolute inset-[63.89%_2.98%_2.18%_2.71%]">
-                      {/* Background Blur */}
-                      <div className="absolute inset-0 backdrop-blur-[5px] backdrop-filter bg-white/75 rounded-xl" />
+            {/* Gradient Overlays */}
+            <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
-                      {/* Title */}
-                      <div className="absolute inset-[0%_0%_70%_0%] flex items-center px-4">
-                        <p className="font-['Risque',_sans-serif] text-[25px] text-black truncate w-full">
-                          {character.name}
-                        </p>
+
+
+            <div 
+              ref={scrollContainerRef}
+              className="overflow-x-auto scroll-smooth scrollbar-hide"
+              style={{ minHeight: '320px' }}
+            >
+              <div className="flex gap-3" style={{ width: 'max-content', minHeight: '300px' }}>
+                {historicalCharacters.map((character, index) => (
+                  <div
+                    key={`${character.name}-${index}`}
+                    className="snap-center"
+                    style={{ 
+                      minWidth: '200px', 
+                      maxWidth: '200px', 
+                      flexShrink: 0 
+                    }}
+                  >
+                    <div 
+                      className="overflow-hidden relative rounded-xl border border-black shadow-lg hover:shadow-2xl transition-shadow group cursor-pointer"
+                      style={{ 
+                        height: '300px',
+                        background: 'linear-gradient(135deg, #9333ea 0%, #7c3aed 100%)'
+                      }}
+                      onClick={() => setSelectedCharacter(character)}
+                    >
+                      {/* Character Image */}
+                      <div style={{ position: 'absolute', inset: '0' }}>
+                        <img
+                          src={character.image}
+                          alt={character.name}
+                          style={{ 
+                            width: '100%', 
+                            height: '100%', 
+                            objectFit: 'cover' 
+                          }}
+                        />
                       </div>
 
-                      {/* Description */}
-                      <div className="absolute inset-[30%_0%_0%_0%] px-4 pb-4 overflow-hidden">
-                        <p className="font-['Alatsi',_sans-serif] text-[18px] leading-[20px] text-black/75 capitalize">
-                          {character.era}
-                          <br />
-                          {character.description}
-                        </p>
+                      {/* Content Overlay */}
+                      <div style={{ 
+                        position: 'absolute', 
+                        bottom: '3%',
+                        left: '3%', 
+                        right: '3%',
+                        top: '60%'
+                      }}>
+                        {/* Background Blur */}
+                        <div 
+                          className="rounded-xl"
+                          style={{ 
+                            position: 'absolute', 
+                            inset: '0',
+                            backgroundColor: 'rgba(255, 255, 255, 0.75)',
+                            backdropFilter: 'blur(5px)'
+                          }} 
+                        />
+
+                        {/* Title */}
+                        <div style={{ 
+                          position: 'absolute', 
+                          top: '0%',
+                          left: '0%', 
+                          right: '0%',
+                          bottom: '65%',
+                          display: 'flex',
+                          alignItems: 'center',
+                          padding: '0 12px'
+                        }}>
+                          <p style={{ 
+                            fontFamily: 'Risque, sans-serif', 
+                            fontSize: '16px', 
+                            color: 'black',
+                            width: '100%',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap'
+                          }}>
+                            {character.name}
+                          </p>
+                        </div>
+
+                        {/* Description */}
+                        <div style={{ 
+                          position: 'absolute', 
+                          top: '35%',
+                          left: '0%', 
+                          right: '0%',
+                          bottom: '0%',
+                          padding: '0 12px 8px 12px',
+                          overflow: 'hidden'
+                        }}>
+                          <p style={{ 
+                            fontFamily: 'Alatsi, sans-serif', 
+                            fontSize: '12px', 
+                            lineHeight: '14px', 
+                            color: 'rgba(0, 0, 0, 0.75)',
+                            display: '-webkit-box',
+                            WebkitLineClamp: 4,
+                            WebkitBoxOrient: 'vertical',
+                            overflow: 'hidden'
+                          }}>
+                            {character.era}
+                            <br />
+                            {character.description}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </motion.div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 
@@ -312,6 +361,81 @@ export function AnimationSection({
           </div>
         </motion.div>
       </div>
+
+      {/* Character Detail Modal */}
+      {selectedCharacter && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+          onClick={() => setSelectedCharacter(null)}
+        >
+          <motion.div 
+            className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3 }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="relative">
+              <img
+                src={selectedCharacter.image}
+                alt={selectedCharacter.name}
+                className="w-full h-64 object-cover rounded-t-2xl"
+              />
+              <button
+                onClick={() => setSelectedCharacter(null)}
+                className="absolute top-4 right-4 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full p-2 transition-all"
+              >
+                <X className="w-5 h-5 text-gray-700" />
+              </button>
+              {/* Character Name Overlay */}
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6">
+                <h2 className="text-2xl md:text-3xl font-bold text-white mb-1">
+                  {selectedCharacter.name}
+                </h2>
+                <p className="text-white text-opacity-90 text-lg">
+                  {selectedCharacter.era}
+                </p>
+              </div>
+            </div>
+
+            {/* Modal Content */}
+            <div className="p-6">
+              <div className="mb-6">
+                <h3 className="text-xl font-semibold mb-3 text-primary">About This Legend</h3>
+                <p className="text-gray-700 leading-relaxed text-lg">
+                  {selectedCharacter.description}
+                </p>
+              </div>
+
+              <div className="border-t pt-6">
+                <h3 className="text-xl font-semibold mb-3 text-primary">Historical Impact</h3>
+                <p className="text-gray-700 leading-relaxed">
+                  This legendary figure represents the rich heritage and powerful legacy of African leadership, 
+                  innovation, and resilience that continues to inspire the Bantu Ants Universe.
+                </p>
+              </div>
+
+              <div className="flex gap-3 mt-8">
+                <Button 
+                  className="flex-1 bg-primary hover:bg-primary/90"
+                  onClick={() => setSelectedCharacter(null)}
+                >
+                  Learn More in Series
+                  <ArrowRight className="ml-2 w-4 h-4" />
+                </Button>
+                <Button 
+                  variant="outline" 
+                  className="border-purple-600 text-purple-600 hover:bg-purple-600/10"
+                  onClick={() => setSelectedCharacter(null)}
+                >
+                  Close
+                </Button>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      )}
     </section>
   );
 }

@@ -1,66 +1,88 @@
 import { motion } from "motion/react";
+import { useState } from "react";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { Card } from "../components/ui/card";
 import { Button } from "../components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
-import { Play, Calendar, Users, Sparkles, Film, Lightbulb } from "lucide-react";
+
+import { Play, Sparkles, Film, Lightbulb, X } from "lucide-react";
+import kamauImageUrl from "../assets/kamaushot.PNG?url";
+import finaImageUrl from "../assets/finainadress.png?url";
+const zuluImageUrl = "/zuluantpose.png";
+const pietImageUrl = "/piet.png";
+import characterDevImageUrl from "../assets/characterdev.png?url";
+import batcSceneImageUrl from "../assets/batc_scene.png?url";
+
 
 interface AnimationPageProps {
   onPitchStory?: () => void;
 }
 
 export function AnimationPage({ onPitchStory }: AnimationPageProps = {}) {
+  const characters = [
+    {
+      name: "🧱 Kamau the Miner",
+      role: "Son of miners, child of revolutionaries",
+      description: "Kamau digs for more than gold. He unearths stories buried by time, reclaiming relics stolen from his ancestors. Guided by visions of the lost Queen, he becomes a bridge between memory and rebellion — a seeker of truth in a fractured world.",
+      powers: ["Ancestral intuition", "Strategic foresight", "Kwanzite resonance"],
+      personality: "Calm, observant, quietly defiant",
+      image: kamauImageUrl,
+    },
+    {
+      name: "⚔️ Fina the Rebel Queen",
+      role: "Born royal, raised by warriors",
+      description: "Trained by the Ahosi, Fina wields both language and blade with the precision of destiny. Her presence commands loyalty; her silence, respect. She carries the wisdom of queens and the fury of generations denied their crown.",
+      powers: ["Linguistic decoding", "Hand-to-hand mastery", "Spiritual empathy"],
+      personality: "Disciplined, regal, courageous",
+      image: finaImageUrl,
+    },
+    {
+      name: "🗣️ Zulu the Warrior",
+      role: "Descendant of the legendary Shaka line",
+      description: "Zulu hides pain behind laughter and wisdom behind wit. A rhythm lives in his stride, a storm in his hands. When he fights, battle becomes dance — and every loss becomes legend.",
+      powers: ["Enhanced strength", "Tactical combat", "Ancestral echo"],
+      personality: "Loyal, magnetic, fiercely protective",
+      image: zuluImageUrl,
+    },
+    {
+      name: "🐝 Bytez the Prodigy",
+      role: "Born in the cyber-townships",
+      description: "Bytez sees art in scrap and music in machinery. Inspired by bees — their unity, precision, and patience — he builds buzzing drones that hum rebellion into the skyline.",
+      powers: ["Hacking and encryption", "Tech improvisation", "Art and dance"],
+      personality: "Inventive, curious, unpredictable",
+      image: "/bytez.png",
+    },
+    {
+      name: "👑 Princess Zaida the Heir",
+      role: "Born into privilege, shaped by contradiction",
+      description: "Zaida moves with the grace of her lineage and the doubt of her reflection. Neither surface dweller nor miner, she stands between worlds — the symbol of unity the empire fears most.",
+      powers: ["Diplomatic influence", "Charisma manipulation", "Hidden lineage power"],
+      personality: "Elegant, introspective, quietly powerful",
+    },
+    {
+      name: "🕯️ Bishop Makorokoro the High Seer",
+      role: "Draped in gold and incense",
+      description: "Makorokoro preaches balance while guarding the scales himself. His voice fills temples and airwaves alike — a melody of devotion and control. Whether prophet or politician depends on who you ask, and how loudly you ask it.",
+      powers: ["Mastery of ceremony", "Kwanzite scripture command", "Persuasive ritual speech"],
+      personality: "Charismatic, disciplined, enigmatic",
+    },
+    {
+      name: "🪓 Piet Kruger the Enforcer",
+      role: "Forged in duty, bound by silence",
+      description: "Piet serves the Council with the precision of a blade, yet beneath the armor, a conscience trembles. He enforces order — even when the order itself feels wrong.",
+      powers: ["Tactical command", "Advanced weaponry", "Adaptive strategy"],
+      personality: "Stoic, loyal, quietly conflicted",
+      image: pietImageUrl,
+    },
+  ];
+
+  const [selectedCharacter, setSelectedCharacter] = useState<typeof characters[0] | null>(characters[0]);
+
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
   };
-
-  const characters = [
-    {
-      name: "Zara the Navigator",
-      role: "Time Traveler & Protagonist",
-      description: "Guided by ancestral spirits, Zara journeys through past and future to protect the Kwanzite. A brilliant scientist and warrior, she bridges the wisdom of her ancestors with cutting-edge technology.",
-      powers: ["Time manipulation", "Ancestral connection", "Energy channeling"],
-      personality: "Curious, brave, deeply connected to heritage",
-    },
-    {
-      name: "Kofi the Keeper",
-      role: "Guardian of Stories",
-      description: "A modern griot who weaves tales into reality, preserving the wisdom of generations. His words have the power to manifest truth and reshape destiny.",
-      powers: ["Story weaving", "Memory preservation", "Reality manipulation"],
-      personality: "Wise, witty, guardian of tradition",
-    },
-    {
-      name: "Amara the Architect",
-      role: "Builder of Worlds",
-      description: "She designs the cities of tomorrow using blueprints from ancient kingdoms. Her vision merges the architectural genius of African empires with futuristic innovation.",
-      powers: ["Structural creation", "Blueprint vision", "Matter manipulation"],
-      personality: "Visionary, methodical, bridge between eras",
-    },
-    {
-      name: "Jabari the Protector",
-      role: "Warrior Chief",
-      description: "Commander of the Kwanzite Guard, he leads the defense against those who would misuse the ancient energy. His strength is matched only by his loyalty.",
-      powers: ["Enhanced strength", "Strategic mastery", "Energy shields"],
-      personality: "Noble, protective, unwavering",
-    },
-    {
-      name: "Nia the Healer",
-      role: "Life Bringer",
-      description: "A herbalist and energy worker who understands the life force that flows through all things. She can restore balance and heal both physical and spiritual wounds.",
-      powers: ["Healing arts", "Life force manipulation", "Plant communion"],
-      personality: "Compassionate, intuitive, nurturer",
-    },
-    {
-      name: "Malik the Shadow",
-      role: "The Antagonist",
-      description: "Once a protector of Kwanzite, Malik believes the only way to save the future is to control it. His vision has twisted into obsession, making him a formidable adversary.",
-      powers: ["Shadow manipulation", "Kwanzite corruption", "Strategic genius"],
-      personality: "Complex, driven, tragic villain",
-    },
-  ];
 
   const timeline = [
     {
@@ -69,7 +91,7 @@ export function AnimationPage({ onPitchStory }: AnimationPageProps = {}) {
       items: [
         { task: "Character Design & Concept Art", complete: true },
         { task: "Story Bible & World Building", complete: true },
-        { task: "Pilot Script", complete: false },
+        { task: "Pilot Script", complete: true },
         { task: "Voice Actor Casting", complete: false },
       ],
     },
@@ -95,12 +117,7 @@ export function AnimationPage({ onPitchStory }: AnimationPageProps = {}) {
     },
   ];
 
-  const team = [
-    { role: "Creator & Writer", name: "Coming Soon" },
-    { role: "Lead Animator", name: "Coming Soon" },
-    { role: "Art Director", name: "Coming Soon" },
-    { role: "Music Composer", name: "Coming Soon" },
-  ];
+
 
   return (
     <main className="min-h-screen">
@@ -125,12 +142,15 @@ export function AnimationPage({ onPitchStory }: AnimationPageProps = {}) {
               <span className="text-white">🎬 Afrofuturist Animation Series</span>
             </div>
             <h1 className="text-5xl md:text-7xl mb-6 text-white">
-              The Kwanzite Chronicles
+              The Bantu Ants Universe
             </h1>
+            <h2 className="text-2xl md:text-3xl text-white/90 mb-4 font-light">
+              Where folklore meets the future
+            </h2>
             <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl">
-              An epic tale where ancient African kingdoms discover a mystical energy source that 
-              bridges past, present, and future. Watch as heroes navigate time to preserve culture 
-              and build tomorrow's world.
+              An Afrofuturist animated saga that weaves together ancient wisdom and tomorrow's possibilities. 
+              Follow our heroes as they navigate worlds where tradition and technology dance in harmony, 
+              and every story holds the power to reshape destiny.
             </p>
             <div className="flex flex-wrap gap-4">
               <Button size="lg" className="bg-white text-primary hover:bg-white/90 group">
@@ -151,8 +171,15 @@ export function AnimationPage({ onPitchStory }: AnimationPageProps = {}) {
       </section>
 
       {/* Series Overview */}
-      <section className="py-20 bg-background">
-        <div className="container mx-auto px-4">
+      <section className="py-20 bg-background relative overflow-hidden">
+        <div className="absolute inset-0 opacity-100">
+          <img
+            src={batcSceneImageUrl}
+            alt="Bantu Ants Scene"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -160,11 +187,9 @@ export function AnimationPage({ onPitchStory }: AnimationPageProps = {}) {
               viewport={{ once: true }}
               className="text-center mb-16"
             >
-              <h2 className="text-4xl md:text-5xl mb-6 text-primary">The Story</h2>
-              <p className="text-lg text-muted-foreground mb-8">
-                In a world where the past holds the key to the future, six unlikely heroes must unite 
-                to protect the Kwanzite—a powerful energy source that connects all of African history 
-                across time and space.
+              <h2 className="text-4xl md:text-5xl mb-6 text-white">The Story</h2>
+              <p className="text-lg text-white mb-8">
+                In the year 2088, beneath a world ruled by the devouring Locust Empire, a forgotten nation of Bantu Ants fights to reclaim its buried history. When a rebellious miner named Kamau uncovers a message from a vanished Queen, he and his crew are thrust into a time-bending struggle that links the kingdom's past and future. Part political satire, part Afrofuturist odyssey, Bantu Ants Travel Club unearths the truth about power, identity, and memory — proving that even underground, revolution finds a way to rise.
               </p>
             </motion.div>
 
@@ -208,7 +233,7 @@ export function AnimationPage({ onPitchStory }: AnimationPageProps = {}) {
       </section>
 
       {/* Characters Section */}
-      <section className="py-20 bg-muted">
+      <section className="py-20 bg-gradient-to-br from-muted via-background to-muted/50">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -216,41 +241,76 @@ export function AnimationPage({ onPitchStory }: AnimationPageProps = {}) {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl mb-6 text-primary">Meet the Heroes</h2>
+            <h2 className="text-4xl md:text-5xl mb-6 text-primary">Meet the Characters</h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Six extraordinary individuals, each connected to the Kwanzite in their own way
+              Discover the heroes and legends of The Bantu Ants Universe
             </p>
           </motion.div>
 
-          <Tabs defaultValue="zara" className="max-w-6xl mx-auto">
-            <TabsList className="grid grid-cols-3 md:grid-cols-6 mb-8">
-              {characters.map((char) => (
-                <TabsTrigger key={char.name.toLowerCase().split(' ')[0]} value={char.name.toLowerCase().split(' ')[0]}>
-                  {char.name.split(' ')[0]}
-                </TabsTrigger>
-              ))}
-            </TabsList>
+          {/* Character Tabs */}
+          <div className="flex flex-wrap justify-center gap-2 mb-8">
+            {characters.map((character, index) => (
+              <motion.button
+                key={character.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                onClick={() => setSelectedCharacter(character)}
+                className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
+                  selectedCharacter?.name === character.name
+                    ? 'bg-primary text-white shadow-lg'
+                    : 'bg-white text-primary hover:bg-primary/10 shadow-sm hover:shadow-md'
+                }`}
+              >
+                {character.name.split(' ').slice(1, 2).join(' ')}
+              </motion.button>
+            ))}
+          </div>
 
-            {characters.map((character) => (
-              <TabsContent key={character.name.toLowerCase().split(' ')[0]} value={character.name.toLowerCase().split(' ')[0]}>
-                <Card className="overflow-hidden">
+          {/* Selected Character Card */}
+          {selectedCharacter && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              className="max-w-4xl mx-auto"
+            >
+              <Card className="overflow-hidden">
+                <div className="relative">
+                  <button
+                    onClick={() => setSelectedCharacter(null)}
+                    className="absolute top-4 right-4 z-10 bg-white/90 hover:bg-white rounded-full p-2 transition-all shadow-lg"
+                  >
+                    <X className="w-5 h-5 text-gray-700" />
+                  </button>
+                  
                   <div className="grid md:grid-cols-2 gap-0">
-                    <div className="relative aspect-square md:aspect-auto bg-gradient-to-br from-primary/20 via-accent/20 to-purple-500/20 flex items-center justify-center">
-                      <span className="text-9xl">✨</span>
-                      <div className="absolute bottom-4 left-4 right-4">
-                        <div className="bg-black/50 backdrop-blur p-3 rounded-lg">
-                          <p className="text-white text-sm">{character.role}</p>
+                    {/* Character Image */}
+                    <div className="relative aspect-square md:aspect-auto">
+                      {selectedCharacter.image ? (
+                        <img 
+                          src={selectedCharacter.image} 
+                          alt={selectedCharacter.name}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-primary/20 via-accent/20 to-purple-500/20 flex items-center justify-center">
+                          <span className="text-9xl">✨</span>
                         </div>
-                      </div>
+                      )}
                     </div>
+
+                    {/* Character Details */}
                     <div className="p-8 md:p-10">
-                      <h3 className="text-3xl mb-4 text-primary">{character.name}</h3>
-                      <p className="text-muted-foreground mb-6">{character.description}</p>
+                      <h3 className="text-2xl font-bold mb-2 text-primary">{selectedCharacter.name}</h3>
+                      <p className="text-lg text-muted-foreground mb-6">{selectedCharacter.role}</p>
+                      <p className="text-muted-foreground mb-6 leading-relaxed">{selectedCharacter.description}</p>
                       
                       <div className="mb-6">
                         <h4 className="text-sm uppercase tracking-wide text-muted-foreground mb-3">Powers & Abilities</h4>
                         <div className="flex flex-wrap gap-2">
-                          {character.powers.map((power) => (
+                          {selectedCharacter.powers.map((power) => (
                             <span key={power} className="px-3 py-1 bg-accent/20 text-accent rounded-full text-sm">
                               {power}
                             </span>
@@ -260,14 +320,14 @@ export function AnimationPage({ onPitchStory }: AnimationPageProps = {}) {
 
                       <div>
                         <h4 className="text-sm uppercase tracking-wide text-muted-foreground mb-2">Personality</h4>
-                        <p className="text-sm">{character.personality}</p>
+                        <p className="text-sm">{selectedCharacter.personality}</p>
                       </div>
                     </div>
                   </div>
-                </Card>
-              </TabsContent>
-            ))}
-          </Tabs>
+                </div>
+              </Card>
+            </motion.div>
+          )}
         </div>
       </section>
 
@@ -293,7 +353,7 @@ export function AnimationPage({ onPitchStory }: AnimationPageProps = {}) {
             {[
               {
                 title: "Concept Art & Design",
-                image: "https://images.unsplash.com/photo-1676474937597-4043441b66f2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhZnJpY2FuJTIwYXJ0JTIwY29uY2VwdCUyMGRlc2lnbnxlbnwxfHx8fDE3NTk0MjcxNTR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+                image: characterDevImageUrl,
                 description: "From initial sketches to final character designs, see how we blend traditional African aesthetics with futuristic elements.",
               },
               {
@@ -385,43 +445,6 @@ export function AnimationPage({ onPitchStory }: AnimationPageProps = {}) {
                 </motion.div>
               ))}
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Team Section */}
-      <section className="py-20 bg-muted">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-4xl md:text-5xl mb-6 text-primary">The Creative Team</h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Passionate storytellers and artists bringing the Kwanzite Chronicles to life
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto">
-            {team.map((member, index) => (
-              <motion.div
-                key={member.role}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <Card className="p-6 text-center">
-                  <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center mb-4">
-                    <Users className="text-white" size={32} />
-                  </div>
-                  <h4 className="mb-2 text-primary">{member.role}</h4>
-                  <p className="text-sm text-muted-foreground">{member.name}</p>
-                </Card>
-              </motion.div>
-            ))}
           </div>
         </div>
       </section>

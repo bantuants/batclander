@@ -67,7 +67,7 @@
 
 @layer theme {
   :root, :host {
-    --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-sans: "ITC American Typewriter", "American Typewriter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     --color-orange-500: oklch(.705 .213 47.604);
     --color-green-100: oklch(.962 .044 156.743);
@@ -4010,5 +4010,67 @@ html {
   to {
     opacity: var(--tw-exit-opacity, 1);
     transform: translate3d(var(--tw-exit-translate-x, 0), var(--tw-exit-translate-y, 0), 0) scale3d(var(--tw-exit-scale, 1), var(--tw-exit-scale, 1), var(--tw-exit-scale, 1)) rotate(var(--tw-exit-rotate, 0));
+  }
+}
+
+/* Custom scrollbar hiding */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
+}
+
+/* Character scroll styles */
+.character-scroll-container {
+  overflow-x: auto;
+  padding-bottom: 1rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.3) transparent;
+}
+
+.character-scroll-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.character-scroll-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.character-scroll-container::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.3);
+  border-radius: 3px;
+}
+
+.character-scroll-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(156, 163, 175, 0.5);
+}
+
+.character-grid {
+  display: flex;
+  gap: 1.5rem;
+  padding: 0.5rem 0;
+  min-width: fit-content;
+}
+
+.character-card {
+  flex: 0 0 auto;
+  width: 280px;
+}
+
+@media (min-width: 768px) {
+  .character-card {
+    width: 300px;
+  }
+  
+  .character-grid {
+    gap: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .character-card {
+    width: 320px;
   }
 }

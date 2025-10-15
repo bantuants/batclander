@@ -4,7 +4,11 @@ import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { MapPin, Users, Utensils, Camera } from "lucide-react";
 
-export function TravelSection() {
+interface TravelSectionProps {
+  onJoinNow?: () => void;
+}
+
+export function TravelSection({ onJoinNow }: TravelSectionProps) {
   const features = [
     { icon: MapPin, text: "Heritage Sites & Sacred Spaces" },
     { icon: Users, text: "Cultural Storytelling Experiences" },
@@ -73,7 +77,10 @@ export function TravelSection() {
                     <span className="text-sm">Small Groups (8-12 Travelers)</span>
                   </div>
                 </div>
-                <Button className="bg-accent hover:bg-accent/90 w-full md:w-auto">
+                <Button 
+                  className="bg-accent hover:bg-accent/90 w-full md:w-auto"
+                  onClick={onJoinNow}
+                >
                   Get Early Access
                 </Button>
               </div>
@@ -123,7 +130,11 @@ export function TravelSection() {
             <p className="text-muted-foreground mb-6 max-w-md">
               Be among the first to receive exclusive trip invites, itineraries, and member benefits.
             </p>
-            <Button size="lg" className="bg-primary hover:bg-primary/90">
+            <Button 
+              size="lg" 
+              className="bg-primary hover:bg-primary/90"
+              onClick={onJoinNow}
+            >
               Sign Up for Exclusive Invites
             </Button>
           </div>

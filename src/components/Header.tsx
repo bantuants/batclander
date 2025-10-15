@@ -1,19 +1,18 @@
-import { Menu, X } from "lucide-react";
+import { Menu, X, ShoppingCart } from "lucide-react";
 import { Button } from "./ui/button";
+import { Badge } from "./ui/badge";
 import { useState } from "react";
 import { motion } from "motion/react";
-import logo from "figma:asset/c19cad1bd882671bbff66522f2e9653a40deb8e6.png";
-
-// TODO: Replace with your actual Shopify store URL
-const SHOPIFY_STORE_URL = "https://your-store.myshopify.com";
+import logo from "../assets/batclogoblk.png";
 
 interface HeaderProps {
   currentPage: string;
   onNavigate: (page: string) => void;
-  onJoinNow: () => void;
+  onCart?: () => void;
+  cartItemCount?: number;
 }
 
-export function Header({ currentPage, onNavigate, onJoinNow }: HeaderProps) {
+export function Header({ currentPage, onNavigate, onCart, cartItemCount = 0 }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const scrollToSection = (sectionId: string) => {
@@ -36,22 +35,31 @@ export function Header({ currentPage, onNavigate, onJoinNow }: HeaderProps) {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4 py-4">
         {/* Logo - Top Center */}
-        <div className="flex justify-center mb-4">
+        <div className="flex justify-center mb-8">
           <button 
             onClick={() => handleNavigation('home', 'hero')}
-            className="group"
+            className="group mt-4 mb-4"
           >
             <img 
               src={logo} 
               alt="Bantu Ants Travel Club" 
-              className="h-[150px] w-auto group-hover:scale-105 transition-transform"
+              className="!h-[54px] w-auto group-hover:scale-105 transition-transform"
+              style={{height: '54px'}}
             />
           </button>
         </div>
 
-        {/* Navigation - Bottom Center */}
-        <div className="flex items-center justify-between md:justify-center">
-          {/* Desktop Navigation */}
+        {/* Navigation */}
+        <div className="flex items-center justify-center md:justify-center relative">
+          {/* Mobile Menu Button */}
+          <button
+            className="md:hidden absolute left-0"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+
+          {/* Desktop Navigation - Center */}
           <nav className="hidden md:flex items-center gap-8">
             <motion.button 
               onClick={() => handleNavigation('home')} 
@@ -117,31 +125,8 @@ export function Header({ currentPage, onNavigate, onJoinNow }: HeaderProps) {
               />
             </motion.button>
             <motion.button 
-              onClick={() => handleNavigation('blog')} 
-              className={`relative py-2 transition-colors ${currentPage === 'blog' ? 'text-primary' : 'text-foreground'}`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <span className="relative z-10">Clubhouse</span>
-              {currentPage === 'blog' && (
-                <motion.div
-                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
-                  layoutId="activeNav"
-                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                />
-              )}
-              <motion.div
-                className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary/50"
-                initial={{ scaleX: 0 }}
-                whileHover={{ scaleX: 1 }}
-                transition={{ duration: 0.2 }}
-              />
-            </motion.button>
-            <motion.a 
-              href={SHOPIFY_STORE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative py-2 text-foreground transition-colors"
+              onClick={() => handleNavigation('shop')}
+              className={`relative py-2 text-foreground transition-colors ${currentPage === 'shop' ? 'text-primary' : ''}`}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -152,24 +137,30 @@ export function Header({ currentPage, onNavigate, onJoinNow }: HeaderProps) {
                 whileHover={{ scaleX: 1 }}
                 transition={{ duration: 0.2 }}
               />
-            </motion.a>
+            </motion.button>
+          </nav>
+
+          {/* Right Side - Cart Button */}
+          <div className="hidden md:flex items-center gap-3 absolute right-0">
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Button onClick={onJoinNow} className="bg-accent hover:bg-accent/90">
-                Join Now
+              <Button 
+                onClick={onCart} 
+                variant="ghost"
+                size="sm"
+                className="relative p-2"
+              >
+                <ShoppingCart size={20} />
+                {cartItemCount > 0 && (
+                  <Badge className="absolute -top-1 -right-1 h-5 w-5 text-xs p-0 flex items-center justify-center bg-primary">
+                    {cartItemCount}
+                  </Badge>
+                )}
               </Button>
             </motion.div>
-          </nav>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden mx-auto"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
@@ -194,22 +185,25 @@ export function Header({ currentPage, onNavigate, onJoinNow }: HeaderProps) {
               Travel Club
             </button>
             <button 
-              onClick={() => handleNavigation('blog')} 
-              className={`text-center hover:text-primary transition-colors ${currentPage === 'blog' ? 'text-primary' : ''}`}
-            >
-              Clubhouse
-            </button>
-            <a 
-              href={SHOPIFY_STORE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-center hover:text-primary transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={() => handleNavigation('shop')} 
+              className={`text-center hover:text-primary transition-colors ${currentPage === 'shop' ? 'text-primary' : ''}`}
             >
               Shop
-            </a>
-            <Button onClick={onJoinNow} className="bg-accent hover:bg-accent/90 w-full">
-              Join Now
+            </button>
+            
+            {/* Mobile Cart Button */}
+            <Button 
+              onClick={onCart} 
+              variant="outline"
+              className="w-full relative"
+            >
+              <ShoppingCart size={16} className="mr-2" />
+              Cart
+              {cartItemCount > 0 && (
+                <Badge className="absolute -top-2 -right-2 h-5 w-5 text-xs p-0 flex items-center justify-center">
+                  {cartItemCount}
+                </Badge>
+              )}
             </Button>
           </nav>
         )}

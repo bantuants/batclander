@@ -3,6 +3,7 @@ import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { Card } from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { Badge } from "../components/ui/badge";
+import headerIslandImageUrl from "../assets/headerisland.jpg?url";
 import { 
   Compass, 
   GraduationCap, 
@@ -128,30 +129,17 @@ export function TravelClubPage({ onJoinNow }: TravelClubPageProps) {
     }
   ];
 
-  const testimonials = [
-    {
-      quote: "This wasn't just travel—it was transformation. I connected with my roots in ways I never imagined possible.",
-      author: "Amara K.",
-      title: "Tech Entrepreneur, Ghana Experience 2024"
-    },
-    {
-      quote: "The depth of cultural immersion combined with world-class experiences is unmatched. This is what conscious luxury travel should be.",
-      author: "Marcus T.",
-      title: "Creative Director, South Africa Experience 2024"
-    },
-    {
-      quote: "I came for the history, stayed for the connections. The conversations we had over meals changed my entire perspective.",
-      author: "Zainab M.",
-      title: "Author, Ethiopia Experience 2023"
-    }
-  ];
-
   return (
     <main className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative min-h-[80vh] flex items-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary via-accent to-secondary">
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40" />
+      <section className="relative min-h-screen flex items-center overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src={headerIslandImageUrl}
+            alt="Travel Club Hero Background"
+            className="w-full h-full object-cover object-center"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30" />
         </div>
         
         <div className="container mx-auto px-4 py-20 relative z-10">
@@ -173,8 +161,12 @@ export function TravelClubPage({ onJoinNow }: TravelClubPageProps) {
               and the Diaspora. Learn from history. Celebrate culture. Build lasting connections.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Button size="lg" className="bg-accent hover:bg-accent/90 text-white group">
-                Apply for Membership
+              <Button 
+                size="lg" 
+                className="bg-accent hover:bg-accent/90 text-white group"
+                onClick={onJoinNow}
+              >
+                Join Club
                 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={20} />
               </Button>
               <Button 
@@ -302,7 +294,10 @@ export function TravelClubPage({ onJoinNow }: TravelClubPageProps) {
                     </ul>
                     <div className="flex items-center justify-between pt-4 border-t">
                       <span className="text-2xl text-accent">{experience.price}</span>
-                      <Button className="bg-primary hover:bg-primary/90">
+                      <Button 
+                        className="bg-primary hover:bg-primary/90"
+                        onClick={onJoinNow}
+                      >
                         Reserve Spot
                       </Button>
                     </div>
@@ -351,132 +346,11 @@ export function TravelClubPage({ onJoinNow }: TravelClubPageProps) {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-24 bg-gradient-to-br from-primary/10 via-accent/10 to-secondary/10">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-6xl mb-6 text-primary">Member Stories</h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Hear from travelers who've been transformed by their experiences
-            </p>
-          </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {testimonials.map((testimonial, index) => (
-              <motion.div
-                key={testimonial.author}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.15 }}
-              >
-                <Card className="p-8 h-full">
-                  <div className="text-5xl text-accent mb-4">"</div>
-                  <p className="text-muted-foreground mb-6 italic">{testimonial.quote}</p>
-                  <div>
-                    <p className="text-primary">{testimonial.author}</p>
-                    <p className="text-sm text-muted-foreground">{testimonial.title}</p>
-                  </div>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* Investment & Partnership */}
-      <section className="py-24 bg-gradient-to-br from-primary via-accent to-secondary text-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center"
-            >
-              <div className="inline-block px-4 py-2 bg-white/20 backdrop-blur rounded-full mb-6">
-                <span>🤝 Partners & Investors</span>
-              </div>
-              <h2 className="text-4xl md:text-6xl mb-6">Building the Future of Cultural Travel</h2>
-              <p className="text-xl mb-8 opacity-90">
-                We're creating experiences that don't exist anywhere else. If you're passionate about 
-                cultural preservation, transformative travel, and building bridges across the African 
-                diaspora, we'd love to connect.
-              </p>
-              <div className="flex flex-wrap gap-4 justify-center">
-                <Button size="lg" className="bg-white text-primary hover:bg-white/90">
-                  Investment Inquiry
-                </Button>
-                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
-                  Partnership Opportunities
-                </Button>
-              </div>
-            </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="mt-16 grid md:grid-cols-3 gap-8 text-center"
-            >
-              <div>
-                <div className="text-5xl mb-2">500+</div>
-                <p className="opacity-90">Members Worldwide</p>
-              </div>
-              <div>
-                <div className="text-5xl mb-2">12</div>
-                <p className="opacity-90">Countries Explored</p>
-              </div>
-              <div>
-                <div className="text-5xl mb-2">98%</div>
-                <p className="opacity-90">Would Travel Again</p>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
 
-      {/* Final CTA */}
-      <section className="py-24 bg-background">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="max-w-3xl mx-auto text-center"
-          >
-            <h2 className="text-4xl md:text-5xl mb-6 text-primary">Ready to Begin Your Journey?</h2>
-            <p className="text-xl text-muted-foreground mb-8">
-              Applications are reviewed on a rolling basis. Space is limited to maintain the 
-              intimate, transformative experience that defines our community.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                size="lg" 
-                className="bg-accent hover:bg-accent/90"
-                onClick={onJoinNow}
-              >
-                Join Now
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline"
-                className="border-primary text-primary hover:bg-primary/10"
-              >
-                Schedule a Call
-              </Button>
-            </div>
-            <p className="text-sm text-muted-foreground mt-6">
-              Invite-only community • Limited spaces available
-            </p>
-          </motion.div>
-        </div>
-      </section>
+
     </main>
   );
 }
