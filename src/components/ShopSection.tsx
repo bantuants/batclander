@@ -34,7 +34,7 @@ export function ShopSection({ onNavigateToShop }: ShopSectionProps = {}) {
         </motion.div>
 
         {/* Product Cards */}
-        <div className="flex w-full mb-12">
+        <div className="flex w-full mb-12 gap-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -43,11 +43,11 @@ export function ShopSection({ onNavigateToShop }: ShopSectionProps = {}) {
             className="relative group cursor-pointer overflow-hidden w-1/2"
           >
             <div className="aspect-square relative">
-              <ImageWithFallback
-                src="/bantu-ants-polo.png"
-                alt="Bantu Ants Heritage Polo"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
+                <ImageWithFallback
+                    src="/bantu-ants-polo.png"
+                    alt="Heritage Polo Collection"
+                    className="w-full h-full object-cover"
+                  />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
                 <h3 className="text-2xl md:text-3xl mb-3 font-bold" style={{ color: '#8B4513' }}>Heritage Polo Collection</h3>
@@ -80,7 +80,7 @@ export function ShopSection({ onNavigateToShop }: ShopSectionProps = {}) {
           >
             <div className="aspect-square relative">
               <ImageWithFallback
-                src="/batcfmodel.png"
+                src="/piet.png"
                 alt="Bantu Ants Casual Collection"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
@@ -119,32 +119,32 @@ export function ShopSection({ onNavigateToShop }: ShopSectionProps = {}) {
             <div className="grid md:grid-cols-2 gap-0">
               <div className="relative aspect-[4/3] md:aspect-auto">
                 <ImageWithFallback
-                  src="/bantu-ants-polo.png"
-                  alt="Bantu Ants Limited Edition Polo"
+                  src="/batctrip.png"
+                  alt="BATC Fashion Brand"
                   className="w-full h-full object-cover object-center"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
               </div>
-              <div className="p-8 md:p-10 flex flex-col justify-center bg-gradient-to-br from-secondary/10 to-accent/10">
-                <h3 className="text-3xl mb-3 text-primary">Limited Edition Drops</h3>
-                <p className="text-muted-foreground mb-6">
-                  Our signature pieces blend Afrofuturist aesthetics with premium quality. Each design is 
-                  inspired by characters and moments from our animation series.
-                </p>
-                <ul className="space-y-2 mb-6 text-sm">
-                  <li className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-accent" />
-                    <span>Premium, sustainable materials</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-accent" />
-                    <span>Limited quantities per release</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-accent" />
-                    <span>Designed by African artists</span>
-                  </li>
-                </ul>
+                                {/* Fashion Brand Card */}
+                  <div className="p-8 md:p-10 flex flex-col justify-center bg-gradient-to-br from-secondary/10 to-accent/10">
+                    <h3 className="text-3xl mb-3 text-primary">Fashion with Purpose</h3>
+                    <p className="text-muted-foreground mb-6">
+                      Our fashion line represents more than just clothing—it's a celebration of African creativity, sustainable practices, and cultural expression. Each piece tells a story of heritage, innovation, and conscious living.
+                    </p>
+                    <ul className="space-y-2 mb-6 text-sm">
+                      <li className="flex items-center gap-2">
+                        <div className="w-1.5 h-1.5 rounded-full bg-accent" />
+                        <span>Ethically sourced materials</span>
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <div className="w-1.5 h-1.5 rounded-full bg-accent" />
+                        <span>Supporting local artisans</span>
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <div className="w-1.5 h-1.5 rounded-full bg-accent" />
+                        <span>Contemporary African design</span>
+                      </li>
+                    </ul>
                 <Button 
                   className="bg-accent hover:bg-accent/90 w-full md:w-auto group"
                   onClick={() => {
