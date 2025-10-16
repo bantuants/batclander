@@ -10,7 +10,7 @@ import finaImageUrl from "../assets/finainadress.png?url";
 const zuluImageUrl = "/zuluantpose.png";
 const pietImageUrl = "/piet.png";
 import characterDevImageUrl from "../assets/characterdev.png?url";
-import batcSceneImageUrl from "../assets/batc_scene.png?url";
+import batcSceneImageUrl from "../assets/batc_scene.webp?url";
 
 
 interface AnimationPageProps {

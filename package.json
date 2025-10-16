@@ -47,16 +47,19 @@
             "recharts": "^2.15.2",
             "sonner": "^2.0.3",
             "tailwind-merge": "*",
-            "vaul": "^1.1.2",
-            "vite-plugin-imagemin": "^0.6.1"
+            "vaul": "^1.1.2"
       },
       "devDependencies": {
             "@types/node": "^20.10.0",
             "@types/react": "^19.2.2",
             "@types/react-dom": "^19.2.1",
             "@vitejs/plugin-react-swc": "^3.10.2",
+            "imagemin": "^9.0.1",
+            "imagemin-pngquant": "^10.0.0",
+            "sharp": "^0.34.4",
             "typescript": "^5.9.3",
-            "vite": "6.3.5"
+            "vite": "6.3.5",
+            "vite-plugin-imagemin": "^0.6.1"
       },
       "scripts": {
             "dev": "vite",
